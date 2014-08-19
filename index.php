@@ -27,8 +27,7 @@
             </div> 
 			
         <div id="main">
-            <div></div>
-            <pre id="editor" spellcheck="true" contenteditable="true" style = "Display:none"></pre>    
+            <pre id="editor" spellcheck="true" contenteditable="true"></pre>    
         </div>
     </div>
 
@@ -36,7 +35,7 @@
 <script>
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/twilight"); 
-    editor.getSession().setMode("ace/mode/javascript");
+    editor.getSession().setMode("ace/mode/text");
 </script>
 <script src="scripts/dropbox.min.js"></script>
 <script src="check.js"></script>

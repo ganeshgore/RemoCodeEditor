@@ -4,7 +4,8 @@ var doc_title = document.getElementById('doc-title');
 var newfolder = document.getElementById('newfolder');
 var newfile = document.getElementById('new');
 var save = document.getElementById('save');
-
+var editor = ace.edit("editor");
+var fileExtension = ({txt:"text",java:"java",c:"c_cpp"});
 
 window.showdown_url_replace = function( url ) {
 	var base = doc_title.getAttribute('rel').replace(/\\/g,'/').replace(/\/[^\/]*$/, '');
@@ -65,30 +66,34 @@ var dropbox_browser_load_folder = function( path, parent ) {
 						zNodes.push({id:CurrentID++, pId:ParentID, name:list, open:false, file:entry_stats[e].path});
 					}
 				}
-				
-				// for (var i=0;i<zNodes.length;i++)
-					// {
-						// document.write("values  " + zNodes[i].id);
-						// document.write(" | " + zNodes[i].pId);
-						// document.write(" | " + zNodes[i].name);
-						// document.write(" | " + zNodes[i].open+ "<br>");
-					// }
-
-				Treebar(zNodes);
+			Treebar(zNodes);
 	});
 }
 
 var editor_load_file = function( file ) {
 	// Empty the editor
 	//editor_area.className += 'loading';
-	editor_area.innerHTML = '';
+	
+	// editor_area.innerHTML = '';
     doc_title.innerHTML = file.replace(/\\/g,'/').replace( /.*\//, '' );
 	client.readFile( file, function( error, data ) {
 		if ( error )
-			console.log( 'is error', error );;       
-		editor_area.innerHTML = data;
+			console.log( 'is error', error );       
+		SetData(file,data);
 	});
 }
+
+
+var SetData = function(fileName,data){
+var extension = "";
+var i = fileName.lastIndexOf('.');
+if (i > 0) {
+    extension = fileName.substring(i+1);
+}
+editor.setValue(data);
+editor.getSession().setMode("ace/mode/"+fileExtension[extension]);
+}
+
 
 //new folder
 
